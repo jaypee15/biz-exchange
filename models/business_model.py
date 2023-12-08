@@ -13,5 +13,5 @@ class BusinessModel(Base):
     industry = Column(String)
     location = Column(String)
 
-    owner = relationship("User", back_populates="businesses")
-    listings = relationship("BusinessListing", back_populates="business")
+    owner = relationship("UserModel", back_populates="businesses")
+    listings = relationship("BusinessListingModel", back_populates="business")

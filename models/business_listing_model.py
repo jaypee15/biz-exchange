@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 
 from database import Base
 
-class BusinessListing(Base):
+class BusinessListingModel(Base):
     __tablename__ = "business_listings"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -14,4 +14,4 @@ class BusinessListing(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    business = relationship("Business", back_populates="listings")
+    business = relationship("BusinessModel", back_populates="listings")
