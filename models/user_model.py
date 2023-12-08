@@ -1,17 +1,15 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
-app = FastAPI()
+from database import Base
 
+class UserModel(Base):
+    __tablename__ = "users"
 
-class Item(BaseModel):
-    name: str = Field(examples=["Foo"])
-    description: str | None = Field(default=None, examples=["A very nice Item"])
-    price: float = Field(examples=[35.4])
-    tax: float | None = Field(default=None, examples=[3.2])
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
 
-
-@app.put("/items/{item_id}")
-async def update_item(item_id: int, item: Item):
-    results = {"item_id": item_id, "item": item}
-    return results
+    
