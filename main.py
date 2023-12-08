@@ -1,13 +1,13 @@
-from typing import Annotated
-
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
+templates = Jinja2Templates(directory="templates")
 
-@app.get("/items/")
-async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):
-    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
-    if q:
-        results.update({"q": q})
-    return results
+@app.get("/")
+async def homepage(request: Request):
+    return templates.TemplateResponse("home/main.html", {"request": request})
+    
